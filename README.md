@@ -152,10 +152,8 @@ BSD
 Author Information
 ------------------
 
-Larry Smith Jr.
-- @mrlesmithjr
-- http://everythingshouldbevirtual.com
-- mrlesmithjr [at] gmail.com
+Darryl Weaver
+Based on Larry Smith Jr.'s ansible samba role
 
 [Ansible]: <https://www.ansible.com>
 [Samba]: <https://www.samba.org/>
