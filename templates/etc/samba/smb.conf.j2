@@ -39,10 +39,6 @@
         winbind refresh tickets = yes
         idmap config * : backend = tdb
         idmap config * : range = 200000-500000
-        idmap config {{ samba_ad_info.netbios_domain_name|upper }} : backend = ad
-        idmap config {{ samba_ad_info.netbios_domain_name|upper }} : range = 1000-199999
-        idmap config {{ samba_ad_info.netbios_domain_name|upper }} : default = yes
-        idmap config {{ samba_ad_info.netbios_domain_name|upper }} : schema_mode = rfc2307
 
 {% elif (samba_create_domain_controller is defined and not samba_create_domain_controller) or samba_create_domain_controller is not defined and samba_server_role == "standalone" %}
 #======================= Global Settings =======================
