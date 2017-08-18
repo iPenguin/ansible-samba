@@ -35,3 +35,46 @@
   when: >
         samba_ad_created['changed'] and
         not samba_ad_created_check['stat']['exists']
+
+- name: config_samba | checking if domain joined
+  stat:
+    path: "/var/log/.samba_ad_joined"
+  register: samba_ad_joined_check
+
+- name: config_samba | joining Active Directory domain
+  shell: /usr/bin/net ads join -U 'Administrator'%{{ samba_ad_info['adminpass'] }}
+  register: samba_ad_joined
+  when: >
+        not samba_ad_joined_check['stat']['exists'] and
+        samba_server_role == "member server"
+
+- name: config_samba | marking domain as joined
+  file:
+    dest: "/var/log/.samba_ad_joined"
+    state: touch
+  when: >
+        samba_ad_joined['changed'] and
+        not samba_ad_joined_check['stat']['exists']
+
+- name: Update nsswitch.conf
+  lineinfile:
+    regexp: "{{ item.regexp }}"
+    line:   "{{ item.line   }}"
+    dest: /etc/nsswitch.conf
+  with_items:
+    - { regexp: '^passwd:', line: 'passwd:		files winbind' }
+    - { regexp: '^group:' , line: 'group:		files winbind' }
+    - { regexp: '^shadow:', line: 'shadow:		files'         }
+  when: >
+        samba_server_role == "member server"
+
+- name: Configure PAM authentication
+  copy: src=common-auth dest=/etc/pam.d/common-auth force=no
+  when: >
+        samba_server_role == "member server"
+
+- name: Configure home directory creation
+  copy: src=common-session dest=/etc/pam.d/common-session force=no
+  when: >
+        samba_server_role == "member server"
+

@@ -32,11 +32,11 @@ samba_groups:
   - 'securedgroup'
   - 'testgroup'
 
-# Defines samba security
+# Defines samba security - 'user' or 'ads' for a domain member
 samba_security: 'user'
 
 # Defines server role
-# (standalone server or active directory domain controller)
+# (standalone server or active directory domain controller or member server)
 samba_server_role: 'standalone server'
 
 # Defines root folder for samba shares to be created

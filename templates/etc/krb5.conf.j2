@@ -24,8 +24,8 @@
         }
 [realms]
         {{ samba_ad_info.kerberos_realm|upper }} = {
-                kdc = 127.0.0.1
-                admin_server = 127.0.0.1
+                kdc = {{ samba_ad_info.ad_dc_hostname }}
+                admin_server = {{ samba_ad_info.ad_dc_hostname }}
         }
 
 [domain_realm]
