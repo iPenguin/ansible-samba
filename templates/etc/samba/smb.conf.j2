@@ -33,16 +33,16 @@
         winbind use default domain = yes
         winbind enum users = yes
         winbind enum groups = yes
-        winbind nss info = rfc2307
+        winbind expand groups = 1
+        winbind nss info = template
+        winbind cache time = 3600
         winbind offline logon = no
         winbind max domain connections = 5
         winbind refresh tickets = yes
         idmap config * : backend = tdb
         idmap config * : range = 200000-500000
-        idmap config {{ samba_ad_info.netbios_domain_name|upper }} : backend = ad
-        idmap config {{ samba_ad_info.netbios_domain_name|upper }} : range = 1000-199999
-        idmap config {{ samba_ad_info.netbios_domain_name|upper }} : default = yes
-        idmap config {{ samba_ad_info.netbios_domain_name|upper }} : schema_mode = rfc2307
+        idmap config {{ samba_ad_info.netbios_domain_name|upper }} : backend = rid
+        idmap config {{ samba_ad_info.netbios_domain_name|upper }} : 10000001-20000000
 
 {% elif (samba_create_domain_controller is defined and not samba_create_domain_controller) or samba_create_domain_controller is not defined and samba_server_role == "standalone" %}
 #======================= Global Settings =======================
