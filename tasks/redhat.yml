@@ -1,0 +1,11 @@
+---
+- name: redhat | installing pre-reqs
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - samba-winbind
+    - samba-winbind-clients
+    - authconfig
+    - samba-client
+
