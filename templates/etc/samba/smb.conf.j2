@@ -40,7 +40,7 @@
         winbind max domain connections = 5
         winbind refresh tickets = yes
         idmap config * : backend = tdb
-        idmap config * : range = 200000-500000
+        idmap config * : range = 3000-7999
         idmap config {{ samba_ad_info.netbios_domain_name|upper }} : backend = rid
         idmap config {{ samba_ad_info.netbios_domain_name|upper }} : 10000001-20000000
 
