@@ -46,7 +46,17 @@
   register: samba_ad_joined
   when: >
         not samba_ad_joined_check['stat']['exists'] and
-        samba_server_role == "member server"
+        samba_server_role == "member server" and
+        ansible_os_family == "Debian"
+
+- name: config_samba | joining Active Directory domain
+  shell: /usr/bin/net ads join -U 'Administrator'%{{ samba_ad_info['adminpass'] }}
+  register: samba_ad_joined
+  when: >
+        not samba_ad_joined_check['stat']['exists'] and
+        samba_server_role == "member server" and
+        ansible_os_family == "RedHat"
+
 
 - name: config_samba | marking domain as joined
   file:
