@@ -21,7 +21,7 @@
   register: samba_ad_created_check
 
 - name: config_samba | configuring Active Directory
-  shell: "samba-tool domain provision --realm={{ samba_ad_info['kerberos_realm']|upper }} --domain={{ samba_ad_info['netbios_domain_name']|upper }} --adminpass='{{ samba_ad_info['adminpass'] }}' --server-role='domain controller' --use-ntvfs"
+  shell: "samba-tool domain provision --realm={{ samba_ad_info['kerberos_realm']|upper }} --domain={{ samba_ad_info['netbios_domain_name']|upper }} --adminpass='{{ samba_ad_info['adminpass'] }}' --server-role='domain controller'"
   register: samba_ad_created
   when: >
         not samba_ad_created_check['stat']['exists'] and
@@ -94,4 +94,3 @@
   copy: src=common-session dest=/etc/pam.d/common-session force=no
   when: >
         samba_server_role == "member server"
-
