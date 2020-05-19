@@ -1,12 +1,14 @@
 ---
 - name: redhat | installing pre-reqs
   yum:
-    name: "{{ item }}"
+    name: [
+      "samba",
+      "pam_krb5",
+      "krb5-workstation",
+      "samba-winbind",
+      "samba-winbind-clients",
+      "authconfig",
+      "samba-client",
+      "acl"
+    ]
     state: present
-  with_items:
-    - krb5-workstation
-    - samba-winbind
-    - samba-winbind-clients
-    - authconfig
-    - samba-client
-

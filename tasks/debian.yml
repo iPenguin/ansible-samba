@@ -1,19 +1,16 @@
 ---
 - name: debian | installing pre-reqs
   apt:
-    name: "{{ item }}"
+    name: [
+      "acl",
+      "dnsutils",
+      "krb5-user",
+      "krb5-config",
+      "samba",
+      "samba-common",
+      "smbldap-tools",
+      "winbind",
+      "libpam-winbind",
+      "libnss-winbind"
+    ]
     state: present
-  with_items:
-    - acl
-    - dnsutils
-    - krb5-user
-    - krb5-config
-    - python-glade2
-    - samba
-    - samba-common
-#    - smbclient
-    - smbldap-tools
-    - system-config-samba
-    - winbind
-    - libpam-winbind
-    - libnss-winbind
