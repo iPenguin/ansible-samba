@@ -9,6 +9,7 @@
   notify:
     - restart nmbd
     - restart smbd
+    - restart winbind
     - restart samba-ad-dc
   with_items:
     - 'etc/krb5.conf'
@@ -35,6 +36,12 @@
   when: >
         samba_ad_created['changed'] and
         not samba_ad_created_check['stat']['exists']
+
+- name: config_samba | unmask samba-ad-dc if this is a DC
+  systemd:
+    name: samba-ad-dc
+    masked: no
+  when: samba_server_role == "active directory domain controller"
 
 - name: config_samba | checking if domain joined
   stat:
